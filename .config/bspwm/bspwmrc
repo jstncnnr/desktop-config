@@ -1,0 +1,81 @@
+#! /bin/sh
+
+# Start polybar first
+bash ~/.config/polybar/launch.sh &
+
+# Nord color scheme
+nord0=#2E3440
+nord1=#3B4252
+nord2=#434C5E
+nord3=#4C566A
+nord4=#D8DEE9
+nord5=#E5E9F0
+nord6=#ECEFF4
+nord7=#8FBCBB
+nord8=#88C0D0
+nord9=#81A1C1
+nord10=#5E81AC
+nord11=#BF616A
+nord12=#D08770
+nord13=#EBCB8B
+nord14=#A3BE8C
+nord15=#B48EAD
+
+# Make sure we restart sxhkd if it is not running
+while :; do
+	if pgrep -x sxhkd >/dev/null; then
+		true
+	else
+		sxhkd &
+	fi
+	sleep 5
+done &
+
+# Set some defaults on startup
+xsetroot -cursor_name left_ptr
+setxkbmap -layout us
+
+# Fix an issue with the JRE and unsupported tiling WMs
+wmname LG3D
+
+# bspwm monitor config
+# (10 virtual desktops on the first available monitor)
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+# bspwm config
+bspc config border_width 4
+bspc config top_padding 48
+bspc config left_padding 8
+bspc config right_padding 8
+bspc config bottom_padding 8
+bspc config window_gap 4
+
+bspc config top_monocle_padding 0
+bspc config left_monocole_padding 0
+bspc config right_monocle_padding 0
+bspc config bottom_monocle_padding 0
+bspc config borderless_monocle true
+bspc config gapless_monocle false
+
+bspc config focused_border_color "$nord3"
+bspc config normal_border_color "$nord0"
+bspc config active_border_color "$nord2"
+bspc config presel_feedback_color "$nord1"
+
+bspc config automatic_scheme alternate
+bspc config focus_follows_pointer true
+bspc config merge_overlapping_monitors true
+bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
+
+# Application rules
+# bspc rule -a discord desktop='^6' follow=off
+# bspc rule -a Spotify desktop='^7'
+# bspc rule -a Pavucontrol state=floating
+
+# Autostart applications
+urxvtc &
+lxpolkit &
+picom --config "$HOME/.config/bspwm/picom.conf" -b
+
+# Focus on desktop 1
+bspc desktop -f 1

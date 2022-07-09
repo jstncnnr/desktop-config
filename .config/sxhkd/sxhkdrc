@@ -1,0 +1,57 @@
+# Kill sxhkd so bspwm will restart it and reload config
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# terminal emulator
+super + x
+	kitty
+
+# file explorer
+super + e
+	thunar
+
+# web browser
+super + b
+	microsoft-edge-stable
+
+# windows-esque screenshot
+super + shift + s
+	flameshot gui -c -s
+
+# flameshot screenshot launcher
+Print
+	flameshot gui
+
+# app launcher
+super + space
+	rofi -show drun
+
+# quit/restart bspwm
+super + alt + {q,r}
+	bspc {quit,wm -r}
+
+# close/kill node
+super +{_,shift +} q
+	bspc node -{c,k}
+
+# preselect the split direction
+super + ctrl + {i,j,k,l}
+	bspc node -p {north,west,south,east}
+
+# cancel the preselect
+super + ctrl + Escape
+	bspc node -p cancel
+
+# focus or move to desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# volume control
+XF86AudioLowerVolume
+	pactl set-sink-volume 0 -5%
+
+XF86AudioRaiseVolume
+	pactl set-sink-volume 0 +5%
+
+XF86AudioMute
+	pactl set-sink-mute 0 toggle
