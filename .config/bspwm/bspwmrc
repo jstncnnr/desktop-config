@@ -44,7 +44,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 # bspwm config
 bspc config border_width 4
-bspc config top_padding 48
+bspc config top_padding 56
 bspc config left_padding 8
 bspc config right_padding 8
 bspc config bottom_padding 8
